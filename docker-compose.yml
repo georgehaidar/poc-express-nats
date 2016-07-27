@@ -1,0 +1,86 @@
+version: '2'
+services:
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+  gnats-a:
+    image: nats
+    entrypoint: /gnatsd
+    ports:
+      - "8222:8222"
+      - "6222:6222"
+      - "4222:4222"
+    command:
+      - --cluster
+      - nats://0.0.0.0:6222
+  gnats-b:
+    image: nats
+    entrypoint: /gnatsd
+    command:
+      - --cluster
+      - nats://0.0.0.0:6222
+      - --routes
+      - nats-route://ruser:T0pS3cr3t@gnats-a:6222
+    links:
+      - gnats-a
+    ports:
+      - "8322:8222"
+      - "6322:6222"
+      - "4322:4222"
+  gnats-c:
+    image: nats
+    entrypoint: /gnatsd
+    command:
+      - --cluster
+      - nats://0.0.0.0:6222
+      - --routes
+      - nats-route://ruser:T0pS3cr3t@gnats-b:6222
+    links:
+      - gnats-b
+    ports:
+      - "8422:8222"
+      - "6422:6222"
+      - "4422:4222"
+  api:
+    build: .
+    image: nu
+    command:
+      - nodemon
+      - api.js
+    ports:
+      - "3000:3000"
+    links:
+      - gnats-a:nats
+    volumes:
+      - .:/app
+  us1:
+    build: .
+    image: nu
+    command:
+      - nodemon
+      - product_views.js
+    links:
+      - gnats-a:nats
+    volumes:
+      - .:/app
+  us2:
+    build: .
+    image: nu
+    command:
+      - nodemon
+      - product_inventory.js
+    links:
+      - gnats-b:nats
+    volumes:
+      - .:/app
+  us3:
+    build: .
+    image: nu
+    command:
+      - nodemon
+      - product_orders.js
+    links:
+      - gnats-c:nats
+    volumes:
+      - .:/app
