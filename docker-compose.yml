@@ -84,3 +84,13 @@ services:
       - gnats-c:nats
     volumes:
       - .:/app
+  us4:
+    build: .
+    image: nu
+    command:
+      - nodemon
+      - stats_collector.js
+    links:
+      - gnats-c:nats
+    volumes:
+      - .:/app
