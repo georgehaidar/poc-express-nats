@@ -22,8 +22,8 @@ groups in action.
 
 If you want to see things in action more interactively (particularly worker queues)
 
-  brew install watch jq
+    brew install watch jq
 
-  watch -n 1 'curl -s http://localhost:3000/reports/products/1 | jq ".report|sort"'
+    watch -n 1 'curl -s http://localhost:3000/reports/products/1 | jq ".report|sort"'
 
-Try scale some of the service to 0 and back up 1 to see the effects
+Try scaling some of the service to 0 and back up 1 to see the effects
