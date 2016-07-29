@@ -2,7 +2,7 @@
 
 ## Assumptions
 
-I assume you have (Docker for Mac)[https://docs.docker.com/engine/installation/mac/#/docker-for-mac] setup
+I assume you have [Docker for Mac](https://docs.docker.com/engine/installation/mac/#/docker-for-mac) setup
 
 ## Running it
 
