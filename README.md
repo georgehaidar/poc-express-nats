@@ -12,8 +12,8 @@ I assume you have [Docker for Mac](https://docs.docker.com/engine/installation/m
 
 Watch the logs as you run these
 
-  curl -s http://localhost:3000/reports/products/1
-  curl -s http://localhost:3000/products/1
+    curl -s http://localhost:3000/reports/products/1
+    curl -s http://localhost:3000/products/1
 
 Once running running you can mess around with scaling services to see queue
 groups in action.
